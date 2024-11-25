@@ -26,12 +26,12 @@ const getUsers =  async ()=>{
 const insertUser = async (username :string, email : string, password : string)=>{
 
     const query = `INSERT INTO users(username,email,password)
-        VALUES ('${username}', '${email}' , '${password}');
+        VALUES ($1 , $2 , $3 );
         `;
     console.log(query);
-    const result = await client.query(query);
+    const result = await client.query(query, [username,email,password]);
     console.log(result); 
 }
 
 //getUsers();
-insertUser("TheFlash2" , "flash@gmail1.com" , "flash");
+insertUser("TheFlash4" , "flash5@gmail1.com" , "flash");
