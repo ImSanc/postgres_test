@@ -19,8 +19,10 @@ connectDb();
 
 const getUsers =  async ()=>{ 
     
-    const result =  await client.query('SELECT * from users');
-    console.log(result.rows.at(0));
+    const result =  await client.query('SELECT * from users;');
+
+
+    console.log( result.rows);
 }
 
 const insertUser = async (username :string, email : string, password : string)=>{
@@ -33,5 +35,25 @@ const insertUser = async (username :string, email : string, password : string)=>
     console.log(result); 
 }
 
+async function getUserByEmail( email : string)
+{
+    try{
+    const query = `select * from users where email = $1;`;
+    const result = await client.query(query,[email]);
+
+    if( result.rowCount == null || result.rowCount == 0){
+        console.error("No email found");
+        return null;
+    }
+    return result.rows.at(0);}
+    catch(err){
+        console.error('Error during fetching user:', err);
+        throw err;
+    }
+
+    
+}
+
 //getUsers();
-insertUser("TheFlash4" , "flash5@gmail1.com" , "flash");
+console.log( getUserByEmail('flash5@gmail1.com') );
+//insertUser("TheFlash4" , "flash5@gmail1.com" , "flash");
